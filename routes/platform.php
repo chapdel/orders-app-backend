@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\Examples\ExampleCardsScreen;
-use App\Orchid\Screens\Examples\ExampleChartsScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsScreen;
-use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
-use App\Orchid\Screens\Examples\ExampleScreen;
-use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Deliver\DeliverCreateScreen;
+use App\Orchid\Screens\Deliver\DeliverListScreen;
+use App\Orchid\Screens\FilesScreen;
 use App\Orchid\Screens\PlatformScreen;
+use UniSharp\LaravelFilemanager\Lfm;
 use App\Orchid\Screens\Role\RoleEditScreen;
+use App\Orchid\Screens\Orders\OdersListScreen;
+use App\Orchid\Screens\Restaurant\RestaurantListScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\Shop\ShopListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -30,7 +30,7 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
+Route::screen('/dashboard', PlatformScreen::class)
     ->name('platform.main');
 
 // Platform > Profile
@@ -87,20 +87,50 @@ Route::screen('roles', RoleListScreen::class)
             ->push(__('Roles'), route('platform.systems.roles'));
     });
 
-// Example...
-Route::screen('example', ExampleScreen::class)
-    ->name('platform.example')
+// Shops
+Route::screen('shops', ShopListScreen::class)
+    ->name('shops')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('platform.index')
-            ->push(__('Example screen'));
+            ->push(__('Shops'));
     });
 
-Route::screen('example-fields', ExampleFieldsScreen::class)->name('platform.example.fields');
-Route::screen('example-layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
-Route::screen('example-charts', ExampleChartsScreen::class)->name('platform.example.charts');
-Route::screen('example-editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
-Route::screen('example-cards', ExampleCardsScreen::class)->name('platform.example.cards');
-Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
+// Shops
+Route::screen('restaurants', RestaurantListScreen::class)
+    ->name('restaurants')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Restaurants'));
+    });
+// Orders
+Route::screen('orders', OdersListScreen::class)
+    ->name('orders')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Orders'));
+    });
 
-//Route::screen('idea', 'Idea::class','platform.screens.idea');
+//delivers
+Route::screen('delivers', DeliverListScreen::class)
+    ->name('delivers')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Delivers'));
+    });
+
+Route::screen('delivers/create', DeliverCreateScreen::class)
+    ->name('delivers.create')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('delivers')
+            ->push(__('Create'), route('delivers.create'));
+    });
+
+Route::prefix('filemanager')->middleware('auth')->group(function () {
+    Lfm::routes();
+});
+Route::screen('files', FilesScreen::class)->name('platform.files');

@@ -20,7 +20,7 @@ class UserListScreen extends Screen
      *
      * @var string
      */
-    public $name = 'User';
+    public $name = 'Users';
 
     /**
      * Display header description.
@@ -97,7 +97,7 @@ class UserListScreen extends Screen
     public function saveUser(User $user, Request $request)
     {
         $request->validate([
-            'user.email' => 'required|unique:users,email,'.$user->id,
+            'user.email' => 'required|unique:users,email,' . $user->id,
         ]);
 
         $user->fill($request->input('user'))
