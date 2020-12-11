@@ -112,11 +112,11 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             // ...Models
-            User::class,
-            Order::class,
-            Shop::class,
-            Restaurant::class,
-            Deliver::class
+            //User::class,
+            //Order::class,
+            //Shop::class,
+            //Restaurant::class,
+            //Deliver::class
         ];
     }
 }
