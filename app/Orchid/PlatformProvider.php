@@ -2,6 +2,9 @@
 
 namespace App\Orchid;
 
+use App\Models\Deliver;
+use App\Models\Restaurant;
+use App\Models\User;
 use Laravel\Scout\Searchable;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemMenu;
@@ -109,7 +112,11 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             // ...Models
-            // \App\Models\User::class
+            User::class,
+            Order::class,
+            Shop::class,
+            Restaurant::class,
+            Deliver::class
         ];
     }
 }
