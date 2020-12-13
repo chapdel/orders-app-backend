@@ -2,13 +2,14 @@
 
 namespace App\Orchid\Screens\Deliver;
 
-use App\Models\Deliver;
 use App\Models\User;
-use App\Orchid\Layouts\Deliver\DeliverCreateLayout;
-use Illuminate\Support\Facades\Request;
-use Orchid\Alert\Toast;
+use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Toast;
 
 class DeliverCreateScreen extends Screen
 {
@@ -31,7 +32,7 @@ class DeliverCreateScreen extends Screen
      *
      * @return array
      */
-    public function query(): array
+    public function query(User $user): array
     {
         return [];
     }
@@ -44,9 +45,10 @@ class DeliverCreateScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Button::make(__('Add new'))
+            Button::make(__('Save deliver'))
                 ->icon('plus')
-                ->href(route('delivers.create')),
+                ->class('btn-success p-1')
+                ->method('save'),
         ];
     }
 
@@ -58,7 +60,30 @@ class DeliverCreateScreen extends Screen
     public function layout(): array
     {
         return [
-            DeliverCreateLayout::class
+            Layout::rows([
+                Input::make('name')
+                    ->type('text')
+                    ->max(255)
+                    ->required()
+                    ->title(__('Name'))
+                    ->placeholder(__('Name')),
+                Input::make('email')
+                    ->type('email')
+                    ->required()
+                    ->title(__('Email'))
+                    ->placeholder(__('Email')),
+                Select::make('city')
+                    ->options([
+                        'Yaoundé'   => 'Yaoundé',
+                        'Douala' => 'Douala',
+                    ])
+                    ->title('Select Deliver Zone')->required(),
+                Input::make('password')
+                    ->type('password')
+                    ->required()
+                    ->title(__('Password'))
+                    ->placeholder(__('Password')),
+            ])
         ];
     }
 
@@ -84,7 +109,7 @@ class DeliverCreateScreen extends Screen
             ],
         ]);
 
-        dd('ddd');
+
 
         $user = User::create([
             'name' => $request->name,

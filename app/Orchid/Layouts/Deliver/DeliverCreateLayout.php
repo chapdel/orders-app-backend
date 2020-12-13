@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Layouts\Deliver;
 
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
@@ -40,7 +41,7 @@ class DeliverCreateLayout extends Rows
                     'Yaoundé'   => 'Yaoundé',
                     'Douala' => 'Douala',
                 ])
-                ->title('Select Deliver Zone'),
+                ->title('Select Deliver Zone')->required(),
             Input::make('password')
                 ->type('password')
                 ->required()
