@@ -9,6 +9,7 @@ use App\Orchid\Screens\PlatformScreen;
 use UniSharp\LaravelFilemanager\Lfm;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Orders\OdersListScreen;
+use App\Orchid\Screens\Restaurant\RestaurantCreateScreen;
 use App\Orchid\Screens\Restaurant\RestaurantListScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\Shop\ShopListScreen;
@@ -104,6 +105,13 @@ Route::screen('restaurants', RestaurantListScreen::class)
             ->parent('platform.index')
             ->push(__('Restaurants'));
     });
+/* Route::screen('restaurants/create', RestaurantListScreen::class)
+    ->name('restaurants.create')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Restaurants'), route('restaurants.create'));
+    }); */
 // Orders
 Route::screen('orders', OdersListScreen::class)
     ->name('orders')

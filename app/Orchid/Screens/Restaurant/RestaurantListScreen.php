@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Restaurant;
 
 use App\Models\Restaurant;
 use App\Orchid\Layouts\Restaurant\RestaurantListTable;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
 class RestaurantListScreen extends Screen
@@ -41,7 +42,11 @@ class RestaurantListScreen extends Screen
      */
     public function commandBar(): array
     {
-        return [];
+        return [
+            Link::make(__('Add new'))
+                ->icon('plus')
+                ->href(route('restaurants.create')),
+        ];
     }
 
     /**

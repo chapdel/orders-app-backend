@@ -2,7 +2,15 @@
 
 namespace App\Orchid\Screens\Restaurant;
 
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Quill;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Toast;
 
 class RestaurantCreateScreen extends Screen
 {
@@ -11,14 +19,14 @@ class RestaurantCreateScreen extends Screen
      *
      * @var string
      */
-    public $name = 'RestaurantCreateScreen';
+    public $name = 'Restaurant Management';
 
     /**
      * Display header description.
      *
      * @var string
      */
-    public $description = 'RestaurantCreateScreen';
+    public $description = 'Create new restaurant';
 
     /**
      * Query data.
@@ -37,7 +45,12 @@ class RestaurantCreateScreen extends Screen
      */
     public function commandBar(): array
     {
-        return [];
+        return [
+            Button::make(__('Save restaurant'))
+                ->icon('plus')
+                ->class('btn-success p-1')
+                ->method('save'),
+        ];
     }
 
     /**
@@ -47,6 +60,53 @@ class RestaurantCreateScreen extends Screen
      */
     public function layout(): array
     {
-        return [];
+        return [
+            /* Layout::rows([
+                Input::make('name')
+                    ->type('text')
+                    ->max(255)
+                    ->required()
+                    ->title(__('Name'))
+                    ->placeholder(__('Name')),
+                Input::make('phone')
+                    ->type('text')
+                    ->required()
+                    ->title(__('Phone number'))
+                    ->placeholder(__('Phone number')),
+                TextArea::make('bio')
+                    ->title('Description')
+                    ->rows(5)
+                    ->placeholder('Insert text here ...')
+            ]) */];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function save(Request $request)
+    {
+        $request->validate([
+            'name' => [
+                'required', 'min:3'
+            ],
+            'phone' => [
+                'required',
+            ],
+        ]);
+
+
+
+        Restaurant::create([
+            'name' => $request->name,
+            'bio' => $request->bio,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        Toast::info(__('Restaurant was added'));
+
+        //return redirect()->back();
     }
 }
