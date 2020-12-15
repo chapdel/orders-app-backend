@@ -30,7 +30,7 @@ class DeliverListTable extends Table
             TD::set('user', 'Name')
                 ->render(function (Deliver $deliver) {
                     return Link::make($deliver->user->name)
-                        ->route('delivers');
+                        ->route('delivers.details', $deliver->id);
                 }),
 
             TD::set('city', 'Zone'),

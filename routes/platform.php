@@ -9,7 +9,6 @@ use App\Orchid\Screens\PlatformScreen;
 use UniSharp\LaravelFilemanager\Lfm;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Orders\OdersListScreen;
-use App\Orchid\Screens\Restaurant\RestaurantCreateScreen;
 use App\Orchid\Screens\Restaurant\RestaurantListScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\Shop\ShopListScreen;
@@ -105,6 +104,13 @@ Route::screen('restaurants', RestaurantListScreen::class)
             ->parent('platform.index')
             ->push(__('Restaurants'));
     });
+Route::screen('restaurants/create', RestaurantListScreen::class)
+    ->name('restaurants.create')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Restaurants'), route('restaurants.create'));
+    });
 /* Route::screen('restaurants/create', RestaurantListScreen::class)
     ->name('restaurants.create')
     ->breadcrumbs(function (Trail $trail) {
@@ -130,12 +136,16 @@ Route::screen('delivers', DeliverListScreen::class)
             ->push(__('Delivers'));
     });
 
+
 Route::screen('delivers/create', DeliverCreateScreen::class)
-    ->name('delivers.create')
+    ->name('delivers.create');
+
+Route::screen('delivers/{slug}', DeliverListScreen::class)
+    ->name('delivers.details')
     ->breadcrumbs(function (Trail $trail) {
         return $trail
             ->parent('delivers')
-            ->push(__('Create'), route('delivers.create'));
+            ->push(__('Delivers'));
     });
 
 Route::prefix('filemanager')->middleware('auth')->group(function () {
